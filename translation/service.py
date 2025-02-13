@@ -8,8 +8,8 @@ def readPdf(filename):
 
 def readImage(image_path):
 
-    path_to_tesseract = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
-    # path_to_tesseract = "/usr/bin/tesseract" # for linux...
+    # path_to_tesseract = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+    path_to_tesseract = "/usr/bin/tesseract" # for linux...
 
 
     img = Image.open(image_path)

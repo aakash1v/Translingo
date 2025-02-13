@@ -1,62 +1,24 @@
-{% load static %}
-<!DOCTYPE HTML>
-<html>
+{% extends 'base.html' %} {% load static %} 
 
-<head>
-    <title>Voidmain</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}" title="style" />
-</head>
+{% block content %}
+<h1>Login Status: {{ message }}</h1>
 
-<body>
-    <div id="main">
-        <div id="header">
-            <div id="logo">
-                <div id="logo_text">
-                    <h3>
-                        <center><a href="#"><font color="white" size="10">Translingo</font></a></center>
-                    </h3>
-                    <br /><br />
-                </div>
-            </div>
-            <div id="menubar">
-                <ul id="menu">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="{% url 'user_login' %}">Login</a></li>
-                    <li><a href="{% url 'registration' %}">Registration</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div id="content_header"></div>
-        <div id="site_content">
-            <div id="content">
-                <h1>Login Status: {{ message }}</h1>
+<form method="POST" action="{% url 'user_login' %}">
+  {% csrf_token %}
 
-				<form method="POST" action="{% url 'user_login' %}">
-                    {% csrf_token %}
-                    
-                    <div class="form_settings">
-                        <p>
-                            <label>Email:</label>
-                            <input class="contact" type="text" name="username" required />
-                        </p>
-                        <p>
-                            <label>Password:</label>
-                            <input class="contact" type="password" name="password" required />
-                        </p>
-                
-                        <p style="padding-top: 15px">
-                            <input class="submit" type="submit" value="Login" />
-                        </p>
-                    </div>
-                </form>
-                
-                
-				
+  <div class="form_settings">
+    <p>
+      <label>Email:</label>
+      <input class="contact" type="text" name="username" required />
+    </p>
+    <p>
+      <label>Password:</label>
+      <input class="contact" type="password" name="password" required />
+    </p>
 
-            </div>
-        </div>
-    </div>
-</body>
-
-</html>
+    <p style="padding-top: 15px">
+      <input class="submit" type="submit" value="Login" />
+    </p>
+  </div>
+</form>
+{% endblock%}

@@ -1,101 +1,74 @@
-{% load  static%}
-<!DOCTYPE HTML>
-<html>
+{% extends "base.html" %}
+{% load static %}
 
-<head>
-<title>Text To Speech Synthesizer</title>
-<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
-</head>
 
-<body>
-	<div id="main">
-		<div id="header">
-			<div id="logo">
-				<div id="logo_text">
-					<!-- class="logo_colour", allows you to change the colour of the text -->
-					<h3>
-						<center><a href="#"><font color="white" size="10">Translingo</font></a></center>
-					</h3>
-					<br/><br/>
-				</div>
-			</div>
-            <div id="menubar">
-				<ul id="menu">
-                    <li><a href="/translate">Translate</a>
-                    <li><a href="/logout">Logout</a></li>
-				</ul>
-			</div>
-		</div>
-		<div id="content_header"></div>
-		<div id="site_content">
-			<div id="content">
 
-             {% if not doc_filename %}   
-             <form name="form" action="/predict/" enctype="multipart/form-data" method="post">
-                {% csrf_token %}
-                <div class="form_settings">
-                    <p>
-                        <span>Select Pdf Document / Image :</span>
-                        <input type="file" class="contact" name="file" required></input>
-                    </p>
-                    
-                    <p>
-                        <span>Select Input Language:</span>
-                        <select name="input_lang" required>
-                            <option value="">--select--</option>
-                            {% for key, value in languages.items %}
-                                <option value="{{ key }}">{{ value }}</option>
-                            {% endfor %}
-                        </select>
-                    </p>
-                    
-                    <p>
-                        <span>Select Output Language:</span>
-                        <select name="output_lang" required>
-                            <option value="">--select--</option>
-                            {% for key, value in languages.items %}
-                                <option value="{{ key }}">{{ value }}</option>
-                            {% endfor %}
-                        </select>
-                    </p>
-                    
-                        
-                    </p>
+{% block content %}
 
-                    <p style="padding-top: 15px">
-                        <span>&nbsp;</span><input class="submit" type="submit"
-                            name="contact_submitted" value="Translate" />
-                    </p>
 
-                </div>
+{% if not doc_filename %}
+<form name="form" action="/predict/" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="form_settings">
+        <p>
+            <span>Select Pdf Document / Image :</span>
+            <input type="file" class="contact" name="file" required></input>
+        </p>
 
-            </form>
-            {% endif %}
-                <hr/>
+        <p>
+            <span>Select Input Language:</span>
+            <select name="input_lang" required>
+                <option value="">--select--</option>
+                {% for key, value in languages.items %}
+                <option value="{{ key }}">{{ value }}</option>
+                {% endfor %}
+            </select>
+        </p>
 
-                {% if doc_filename %}
-                    <font color="blue" size="5">Summary</font>
-                    <div style="border-style: solid;" align="center">
-                        {{ output }}
-                    </div>
-                {% endif %}
+        <p>
+            <span>Select Output Language:</span>
+            <select name="output_lang" required>
+                <option value="">--select--</option>
+                {% for key, value in languages.items %}
+                <option value="{{ key }}">{{ value }}</option>
+                {% endfor %}
+            </select>
+        </p>
 
-                <hr/>
-                {% if doc_filename %}
-                    <p align="center"><a href="{% url 'download' %}?file={{ doc_filename }}" download>Download Translated Document</a></p>
-                {% endif %}
 
-                <hr/>
-                {% if audio_filename %}
-                    <audio controls>
-                        <source src="{% static 'audio/' %}{{ audio_filename }}" type="audio/mp3">
-                        Your browser does not support the audio element.
-                    </audio>
-                {% endif %}
+        </p>
 
-			</div>
+        <p style="padding-top: 15px">
+            <span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="Translate" />
+        </p>
 
-		</div>
-	</div>
-</body>
-</html>
+    </div>
+
+</form>
+{% endif %}
+<hr />
+
+{% if doc_filename %}
+<font color="blue" size="5">Summary</font>
+<div style="border-style: solid;" align="center">
+    {{ output }}
+</div>
+{% endif %}
+
+<hr />
+{% if doc_filename %}
+<p align="center"><a href="{% url 'download' %}?file={{ doc_filename }}" download>Download Translated
+        Document</a></p>
+{% endif %}
+
+<hr />
+{% if audio_filename %}
+<audio controls>
+    <source src="{% static 'audio/' %}{{ audio_filename }}" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+{% endif %}
+
+
+
+{% endblock %}

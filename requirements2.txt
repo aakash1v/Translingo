@@ -83,3 +83,8 @@ tzdata @ file:///croot/python-tzdata_1690578112552/work
 unicodedata2 @ file:///croot/unicodedata2_1736541023050/work
 urllib3 @ file:///croot/urllib3_1727769808118/work
 wheel==0.45.1
+youtube_transcript_api
+streamlit
+google-generativeai
+python-dotenv
+pathlib

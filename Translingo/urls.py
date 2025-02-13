@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.urls import path
 from django.contrib import admin
-from translation.views import user_login, logout_view, translate_page, registration, predict, download
+from translation.views import user_login, logout_view, translate_page, registration, predict, download, yttranscriber
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,4 +35,5 @@ urlpatterns = [
 
     # 🔹 Translate
     path('translate/', translate_page, name='translate_page'),
+    path('yttranscriber/', yttranscriber , name='yttranscriber'),
 ]

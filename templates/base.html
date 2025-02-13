@@ -1,0 +1,45 @@
+{% load static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>{% block title %} Text To Speech Synthesizer{% endblock %}</title>
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+</head>
+
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="logo">
+                <div id="logo_text">
+                    <!-- class="logo_colour", allows you to change the colour of the text -->
+                    <h3>
+                        <center><a href="#">
+                                <font color="white" size="10">Translingo</font>
+                            </a></center>
+                    </h3>
+                    <br /><br />
+                </div>
+            </div>
+            <div id="menubar">
+                <ul id="menu">
+                    <li><a href="/translate">Translate</a>
+                    <li><a href="{% url 'yttranscriber' %}">Youtube transcriber</a></li>
+                    {% if not user.is_authenticated %}
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/registration">Registration</a></li>
+                    {% else %}
+                    <li><a href="/logout">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div id="content_header"></div>
+        <div id="site_content">
+             <div id="content">{% block content %} {% endblock %}</div>
+        </div>
+    </div>
+</body>
+
+</html>

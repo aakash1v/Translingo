@@ -6,13 +6,12 @@ from .models import RegistrationModel
 from translation.service import readImage
 from translation.utils import extract_text_from_pdf, read_image, summarize_parallel
 import googletrans
-import textblob
 import os
 import re
 import uuid
 from gtts import gTTS
 from googletrans import Translator
-
+from django.http import HttpResponse
 
 # Define PROJECT_PATH
 # Move PROJECT_PATH one level up
@@ -54,6 +53,7 @@ def registration(request):
 def user_login(request):
     if request.method == "POST":
         loginForm = LoginForm(request.POST)
+        
         if loginForm.is_valid():
             uname = loginForm.cleaned_data["username"]
             upass = loginForm.cleaned_data["password"]
@@ -112,16 +112,6 @@ def handle_uploaded_file(f):
 
 
 
-
-# 🔹 Translation Function
-# def translate(input_text, input_lang, output_lang):
-#     try:
-#         words = textblob.TextBlob(input_text)
-#         words = words.translate(from_lang=input_lang, to=str(output_lang))
-#         return words
-#     except Exception as e:
-#         print(f"Translation Error: {e}")
-#     return ""
 
 def translate(input_text, input_lang, output_lang):
     """Translates text from input_lang to output_lang using googletrans."""
@@ -209,4 +199,14 @@ def download(request):
     else:
         return render(request, 'translate.html', {"message": "File not found"})
 
+
+#### Youtube  video trinscriber..
+def yttranscriber(request):
+    # Redirect to the Streamlit app running at localhost:8501
+    return redirect("http://localhost:8501/")
+
+
+# def yttranscriber(request):
+#     # Ensure a valid response is returned
+#     return HttpResponse("This is the yttranscriber view.")
 
