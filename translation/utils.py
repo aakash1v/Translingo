@@ -50,7 +50,7 @@ def summarize_parallel(input_text):
     """
     try:
         input_ids = tokenizer.encode("summarize: " + input_text, return_tensors="pt", max_length=512, truncation=True)
-        summary_ids = model.generate(input_ids, max_length=500, min_length=50, length_penalty=2.0, num_beams=4, early_stopping=True)
+        summary_ids = model.generate(input_ids, max_length=150, min_length=50, length_penalty=2.0, num_beams=4, early_stopping=True)
         return tokenizer.decode(summary_ids[0], skip_special_tokens=True)
     except Exception as e:
         print(f"Error summarizing text: {e}")

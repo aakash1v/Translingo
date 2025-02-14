@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import FileResponse
-from django.contrib.auth import logout 
+from django.contrib.auth import logout, login
 from .forms import LoginForm, RegistrationForm, UploadFileForm
 from .models import RegistrationModel
 from translation.service import readImage
@@ -12,6 +12,7 @@ import uuid
 from gtts import gTTS
 from googletrans import Translator
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 # Define PROJECT_PATH
 # Move PROJECT_PATH one level up
@@ -45,12 +46,13 @@ def registration(request):
     if status:
         return render(request, 'index.html', {"message": "Registration successful!"})
     else:
-        return render(request, 'registration.html', {"message": "User already exists"})
+        return render(request, 'registration/register.html', {"message": "User already exists"})
 
 
 
 # 🔹 User Login
 def user_login(request):
+    
     if request.method == "POST":
         loginForm = LoginForm(request.POST)
         
@@ -61,15 +63,18 @@ def user_login(request):
             print(user)
             if user:
                 request.session["username"] = uname
+                
+                # login(request, user)
                 return redirect("translate_page")  # Redirect to translation page
 
-            return render(request, "login.html", {"message": "Invalid username or Password"})
-
-    return render(request, "login.html")  # Render login page for GET requests
+            return render(request, "registration/login.html", {"message": "Invalid username or Password"})
+    
+    return render(request, "registration/login.html")  # Render login page for GET requests
 
 
 # 🔹 User Logout
 def logout_view(request):
+    request.session.pop('username')
     logout(request)
     return redirect('user_login')
 
@@ -112,7 +117,6 @@ def handle_uploaded_file(f):
 
 
 
-
 def translate(input_text, input_lang, output_lang):
     """Translates text from input_lang to output_lang using googletrans."""
     if not input_text.strip():
@@ -126,6 +130,7 @@ def translate(input_text, input_lang, output_lang):
     except Exception as e:
         print(f"⚠️ Translation Error: {e}")
         return f"Translation failed: {str(e)}"
+
 
 def translate_page(request):
     # Get the list of available languages
@@ -206,7 +211,5 @@ def yttranscriber(request):
     return redirect("http://localhost:8501/")
 
 
-# def yttranscriber(request):
-#     # Ensure a valid response is returned
-#     return HttpResponse("This is the yttranscriber view.")
+
 

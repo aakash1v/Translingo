@@ -26,7 +26,7 @@
                 <ul id="menu">
                     <li><a href="/translate">Translate</a>
                     <li><a href="{% url 'yttranscriber' %}">Youtube transcriber</a></li>
-                    {% if not user.is_authenticated %}
+                    {% if not username %}
                     <li><a href="/login">Login</a></li>
                     <li><a href="/registration">Registration</a></li>
                     {% else %}

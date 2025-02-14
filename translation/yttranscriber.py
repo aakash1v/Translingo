@@ -35,6 +35,21 @@ def generate_gemini_content(transcript_text, prompt):
 
 
 st.title("youtube Transcript to Detailed Notes Convertor")
+
+# Add a back button
+# Display a "Back" link to navigate to Django
+st.markdown(
+    """
+    <a href="http://127.0.0.1:8000/translate/" target="_self" style="color: white; text-decoration: none;">
+        <button style="background-color: #4CBS10; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; cursor: pointer; border-radius:20px">
+            Go Back
+        </button>
+    </a>
+    """,
+    unsafe_allow_html=True
+)
+
+    
 youtube_link = st.text_input("Enter youTube video Link: ")
 
 if youtube_link:
